@@ -1,0 +1,6 @@
+The encoding and decoding works succesfully for png and jpg images.
+
+The encoding fails when it comes to input image as jpeg.
+The decoding can't be tested until the encoding works for jpeg images. 
+
+ 
