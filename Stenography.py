@@ -99,7 +99,7 @@ def hide_data(image, secret_message):
 	return image
 
 
-def show_data(image):
+def unhide_data(image):
 	'''
    This function is used to decode the message from the png image file by checking for our preset delimiter DELIMETER which can be changed to anything we want
    
@@ -131,81 +131,64 @@ def show_data(image):
 	return decoded_data[:-5]    # remove the delimeter to show the original hidden message
 
 
-# Encode data into image
+def display_image(image, title):
+	print('The shape of the image is', image.shape)    # check the shape of image to calculate size in bytes
+	resized_image = cv2.resize(image, (500, 500))    # resize the image as per your requirement
+	cv2.imshow(title, resized_image)    # display the image
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()
 
-def encode_text(): # split into more functions
+
+def encode_text(): 
 	'''
 	This function is used to read the message to be encoded and the image file to hide the message in and then decode the message into the image using hide_data.
 	TODO: Fails for jpeg images, so fix this.
 	'''
 
-	image_name = input('Enter image path: ')
-	old_name = image_name
+	input_image_path = input('Enter image path: ')	
+	input_image_path = os.path.abspath(input_image_path)
+	image = cv2.imread(input_image_path) # Read the input image using OpenCV-Python.
 
-	# # TODO rpartition on dot seems like a better way
-	# if image_name[-3:] == 'peg':
-	# 	image_name = image_name[:-5] + 'Renamed' + '.png'
-	# 	print(old_name, ' ', image_name, '\n')
-	# 	JPEG_To_PNG(old_name, image_name)
-
-	# elif image_name[-3:] == 'jpg':
-	# 	image_name = image_name[:-4] + 'Renamed' + '.png'
-	# 	print(old_name, ' ', image_name, '\n')
-	# 	JPEG_To_PNG(old_name, image_name)
-
-	grayscale_or_color = int(input("Grayscale (1) or Colour (2): "))
-	
-	if grayscale_or_color == 1:
-		new_name = image_name[:-4] + 'ProperGrayed' + '.png'
-		RGB_To_Grayscale(image_name, new_name)
-		image_name = new_name
-	
-	image = cv2.imread(image_name) # Read the input image using OpenCV-Python.
-
-	# details of the image
-
-	print('The shape of the image is', image.shape)    # check the shape of image to calculate size in bytes
-	resized_image = cv2.resize(image, (500, 500))    # resize the image as per your requirement
-	cv2.imshow('Resized Input Image', resized_image)    # display the image
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
+	display_image(image, 'Resized Input Image')
 
 	data = input('Enter data to be encoded : ')
 	if len(data) == 0:
 		raise ValueError('Data is empty')
 
-	filename = input('Enter path for output image: ')
-	encoded_image = hide_data(image, data)    
-	cv2.imwrite(filename, encoded_image)
+	output_image_path = input('Enter path for output image: ')
+	output_image_path = os.path.abspath(output_image_path)
 
+	encoded_image = hide_data(image, data)    
+	cv2.imwrite(output_image_path, encoded_image)
+
+	print("Output image has been generated at", output_image_path)
 
 def decode_text():
 	# Decode the data in the image
 	# read the image that contains the hidden image
 
-	image_name = input("Enter path of image to decode: ")
-	image = cv2.imread(image_name)    # read the image using cv2.imread()
-
-	resized_image = cv2.resize(image, (500, 500))    # resize the original image as per your requirement
-	cv2.imshow('Resized Image with Hidden text', resized_image)    # display the Steganographed image
-	cv2.waitKey(0)
-	cv2.destroyAllWindows()
-
-	text = show_data(image)
+	input_image_path = input('Enter image path: ')	
+	input_image_path = os.path.abspath(input_image_path)
+	image = cv2.imread(input_image_path) # Read the input image using OpenCV-Python.
+	
+	display_image(image, 'Resized Image with Hidden text')
+	
+	text = unhide_data(image)
 	return text
 
 def menu():
-	choice = input("Encode(1) or Decode(2): ")
-	choice = int(choice)
+	choice = int(input("Encode (1) or Decode (2): "))
 	if choice == 1:
-		print('Encoding...')
 		encode_text()
 	elif choice == 2:
-		print('Decoding...')
 		print('Decoded message is ' + decode_text())
 	else:
 		raise Exception('Invalid input.')
 
+def main():
+	while True:
+		menu()
+		yn = input("Do you want to continue? (y/n): ").lower()
+		if yn != 'y': break
 
-for i in range(2):    # First run for encoding and second run for decoding.
-	menu()
+main()
