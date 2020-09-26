@@ -4,7 +4,7 @@ SECRET = r"images/image3.jpg"
 NF_BITS = 7
 # PUBLIC = r"images/image7.jpg"
 # SECRET = r"images/image9.jpg"
-# NF_BITS = 7
+# NF_BITS = 3
 
 from Stenography import *
 import cv2
@@ -47,7 +47,11 @@ def merge_images(pub_image, secret_image, nf_bits):
 		secret_image >> (8 - nf_bits)
 	return res_image
 
-
+def unmerge_image(artificial_image, nf_bits):
+	artificial_image = np.array(artificial_image, np.uint8)
+	# Shifting left would show
+	artificial_image <<= (8 - nf_bits)
+	return artificial_image
 
 if __name__ == '__main__':
 	pub_image_path = PUBLIC
@@ -58,3 +62,5 @@ if __name__ == '__main__':
 	secret_image = cv2.imread(secret_image_path)
 	result = merge_images(pub_image, secret_image, nf_bits)
 	display_image(result, "Merged")
+	hidden = unmerge_image(result, nf_bits)
+	display_image(hidden, "Reveal")
