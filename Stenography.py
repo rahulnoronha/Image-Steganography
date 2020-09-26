@@ -42,57 +42,42 @@ def hide_data(image, secret_message):
 	'''
 
 	# calculate the maximum bytes that can be encoded
-
 	n_bytes = image.shape[0] * image.shape[1] * 3 // 8
 	print('Maximum bytes to encode:', n_bytes)
 
 	# Check if the number of bytes to encode is less than the maximum bytes in the image
-
 	if len(secret_message) > n_bytes:
 		raise ValueError('Error: Insufficient bytes. Need bigger image or less data')
 
 	secret_message += DELIMETER    # you can use any string as the delimeter
 
+	secret_message = to_binary(secret_message)
 	data_index = 0
+	data_len = len(secret_message)    
 
-	# convert input data to binary format using to_binary() fucntion
-
-	binary_secret_msg = to_binary(secret_message)
-
-	data_len = len(binary_secret_msg)    # Find the length of data that needs to be hidden
 	for values in image:
 		for pixel in values:
 
 			# convert RGB values to binary format
-
 			(r, g, b) = to_binary(pixel)
 
 			# modify the least significant bit only if there is still data to store
-
 			if data_index < data_len:
-
 				# hide the data into least significant bit of red pixel
-
-				pixel[0] = int(r[:-1] + binary_secret_msg[data_index], 
-							   2)
+				pixel[0] = int(r[:-1] + secret_message[data_index], base = 2)
 				data_index += 1
-			if data_index < data_len:
 
+			if data_index < data_len:
 				# hide the data into least significant bit of green pixel
-
-				pixel[1] = int(g[:-1] + binary_secret_msg[data_index], 
-							   2)
+				pixel[1] = int(g[:-1] + secret_message[data_index], base = 2)
 				data_index += 1
+
 			if data_index < data_len:
-
 				# hide the data into least significant bit of  blue pixel
-
-				pixel[2] = int(b[:-1] + binary_secret_msg[data_index], 
-							   2)
+				pixel[2] = int(b[:-1] + secret_message[data_index], base = 2)
 				data_index += 1
 
 			# if data is encoded, just break out of the loop
-
 			if data_index >= data_len:
 				break
 
@@ -101,28 +86,24 @@ def hide_data(image, secret_message):
 
 def unhide_data(image):
 	'''
-   This function is used to decode the message from the png image file by checking for our preset delimiter DELIMETER which can be changed to anything we want
-   
-  '''
+	This function is used to decode the message from the png image file by checking for our preset delimiter DELIMETER which can be changed to anything we want.
+	'''
 
 	binary_data = ''
 	for values in image:
 		for pixel in values:
 			(r, g, b) = to_binary(pixel)    # convert the red, green and blue values into binary format
-			binary_data += r[-1]    # extracting data from the least significant bit of red pixel
-			binary_data += g[-1]    # extracting data from the least significant bit of red pixel
-			binary_data += b[-1]    # extracting data from the least significant bit of red pixel
+			# extracting data from the least significant bit of red, green and blue pixels
+			binary_data += r[-1] + g[-1] + b[-1]
 
 	# split by 8-bits
-
 	all_bytes = [binary_data[i:i + 8] for i in range(0, 
 				 len(binary_data), 8)]
 
 	# convert from bits to characters
-
 	decoded_data = ''
 	for byte in all_bytes:
-		decoded_data += chr(int(byte, 2))
+		decoded_data += chr(int(byte, base = 2))
 		if decoded_data[-5:] == DELIMETER:    # check if we have reached the delimeter which is "#####"
 			break
 
@@ -148,6 +129,8 @@ def encode_text():
 	input_image_path = input('Enter image path: ')	
 	input_image_path = os.path.abspath(input_image_path)
 	image = cv2.imread(input_image_path) # Read the input image using OpenCV-Python.
+	if image is None:
+		raise FileNotFoundError()
 
 	display_image(image, 'Resized Input Image')
 
@@ -155,7 +138,7 @@ def encode_text():
 	if len(data) == 0:
 		raise ValueError('Data is empty')
 
-	output_image_path = input('Enter path for output image: ')
+	output_image_path = input('Enter path for output image (PNG recommended) : ')
 	output_image_path = os.path.abspath(output_image_path)
 
 	encoded_image = hide_data(image, data)    
