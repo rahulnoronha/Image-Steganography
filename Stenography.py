@@ -174,4 +174,5 @@ def main():
 		yn = input("Do you want to continue? (y/n): ").lower()
 		if yn != 'y': break
 
-main()
+if __name__ == '__main__':
+	main()
