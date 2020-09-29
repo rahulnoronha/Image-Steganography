@@ -157,6 +157,7 @@ def decode_text():
 	display_image(image, 'Resized Image with Hidden text')
 	
 	text = unhide_data(image)
+	print('Decoded message is '+text)
 	return text
 
 def menu():
@@ -168,11 +169,11 @@ def menu():
 	else:
 		raise Exception('Invalid input.')
 
-def main():
+def THmain():
 	while True:
 		menu()
 		yn = input("Do you want to continue? (y/n): ").lower()
 		if yn != 'y': break
 
 if __name__ == '__main__':
-	main()
+	THmain()

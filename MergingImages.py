@@ -53,7 +53,7 @@ def unmerge_image(artificial_image, nf_bits):
 	artificial_image <<= (8 - nf_bits)
 	return artificial_image
 
-if __name__ == '__main__':
+def IHmain():
 	pub_image_path = PUBLIC
 	secret_image_path = SECRET
 	nf_bits = NF_BITS
@@ -64,3 +64,9 @@ if __name__ == '__main__':
 	display_image(result, "Merged")
 	hidden = unmerge_image(result, nf_bits)
 	display_image(hidden, "Reveal")
+
+
+
+
+if __name__ == '__main__':
+        IHmain()
