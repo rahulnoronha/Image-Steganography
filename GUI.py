@@ -90,6 +90,7 @@ Frame4= Frame(window)
 for frame in (Home,Frame1, Frame2,Frame3, Frame4):
     frame.grid(row=0,column=0,sticky='news')
 
+#Home Frame
 Label(Home,text='Steganography Program').pack()
 button1=Button(Home,text='Hide Text', padx=30,pady=20, command=lambda:raise_frame(Frame1))
 button1.pack()
@@ -99,12 +100,11 @@ button2=Button(Home,text='Hide Image', padx=30,pady=20, command=lambda:raise_fra
 button2.pack()
 button14=Button(Home, text='Unhide Image',padx=30,pady=20,command=lambda:raise_frame(Frame4))
 button14.pack()
-
-
 button3=Button(Home,text='Exit', padx=30,pady=20,command=window.quit)
 button3.pack()
 
 
+#Frame1 for Hinding Text
 Label(Frame1,text='Hiding Text').pack()
 button4=Button(Frame1,text='Select Input Image Path', command=encode)
 button4.pack()
@@ -118,6 +118,8 @@ button6.pack()
 button7=Button(Frame1,text='Exit', padx=30,pady=20,command=window.quit)
 button7.pack()
 
+
+#Frame2 for Hiding Image
 clicked=IntVar()
 clicked1=IntVar()
 Label(Frame2,text='Hiding Image').pack()
@@ -131,6 +133,8 @@ button8.pack()
 button9=Button(Frame2,text='Exit', padx=30,pady=20,command=window.quit)
 button9.pack()
 
+
+#Frame3 for Retrieving Text
 Label(Frame3,text='Retrieving Text').pack()
 Label(Frame3,text='Select Image Path').pack()
 button11=Button(Frame3,padx=10,pady=10,text='Enter',command=decode)
@@ -140,6 +144,7 @@ button12.pack()
 button13=Button(Frame3,text='Exit', padx=30,pady=20,command=window.quit)
 button13.pack()
 
+#Frame4 for Retrieving Image
 Label(Frame4,text='Retrieving Image').pack()
 Label(Frame4,text='Select Image Path').pack()
 Label(Frame4,text='Number of bits that were use for Hiding').pack()
