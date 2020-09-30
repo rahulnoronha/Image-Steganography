@@ -47,6 +47,7 @@ def merge_images(pub_image, secret_image, nf_bits):
 		secret_image >> (8 - nf_bits)
 	return res_image
 
+
 def unmerge_image(artificial_image, nf_bits):
 	artificial_image = np.array(artificial_image, np.uint8)
 	# Shifting left would show
@@ -69,4 +70,4 @@ def IHmain():
 
 
 if __name__ == '__main__':
-        IHmain()
+	IHmain()
