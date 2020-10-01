@@ -16,8 +16,7 @@ def merge_images(pub_image, secret_image, nf_bits):
 	"""
 
 	# Raise an error if secret_image doesn't fit inside pub_image
-	if pub_image.shape[0] < secret_image.shape[0] or\
-	   pub_image.shape[1] < secret_image.shape[1]:
+	if pub_image.shape[0] < secret_image.shape[0] or pub_image.shape[1] < secret_image.shape[1]:
 		raise ValueError("Public image is smaller than SECRET image.")
 
 	# Converting to numpy array for concise calculations
