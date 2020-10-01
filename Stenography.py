@@ -26,7 +26,13 @@ def to_binary(message):
     '''
 
     if type(message) == str:
+        try: # Have to do this because either hide_data or unhide_data doesn't work for non-ascii chars
+            message.encode('ascii')
+        except UnicodeEncodeError:
+            raise TypeError('Input type not supported')
+
         return ''.join([format(ord(i), '08b') for i in message])
+
     elif type(message) == bytes or type(message) == np.ndarray:
         return [format(i, '08b') for i in message]
     elif type(message) == int or type(message) == np.uint8:
