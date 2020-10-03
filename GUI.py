@@ -7,6 +7,7 @@ from MergingImages import *
 BGD_COLOR = 'light blue'
 TITLE_BGD_COLOR = 'azure'
 TITLE_FORE_COLOR = 'red'
+BUTTON_FONT = ('Arial', 10, 'bold')
 
 global Frame1, Frame2, Frame3, Frame4, Home, frame
 global button1, button2, button3, button4, button5, button6, button7, button8, button9
@@ -42,15 +43,15 @@ def home():
     global Home, Frame1, Frame2, Frame3, Frame4, text1, button1, button2, button3, button4, button5
     Label(Home, text='', bg=BGD_COLOR).grid(row=0, column=1500)
     make_title(Home, 'Steganography Application')
-    button1 = Button(Home, text='Hide Texts', bd=5, padx=30, pady=20, command=lambda: raise_frame(Frame1))
+    button1 = Button(Home, text='Hide Texts', bd=5, padx=30, pady=20, font = BUTTON_FONT, command=lambda: raise_frame(Frame1))
     button1.grid(row=400, column=500)
-    button2 = Button(Home, text='Unhide Texts', bd=5, padx=30, pady=20, command=lambda: raise_frame(Frame3))
+    button2 = Button(Home, text='Unhide Texts', bd=5, padx=30, pady=20, font = BUTTON_FONT, command=lambda: raise_frame(Frame3))
     button2.grid(row=400, column=5000)
-    button3 = Button(Home, text='Hide Image', bd=5, padx=30, pady=20, command=lambda: raise_frame(Frame2))
+    button3 = Button(Home, text='Hide Image', bd=5, padx=30, pady=20, font = BUTTON_FONT, command=lambda: raise_frame(Frame2))
     button3.grid(row=1600, column=500)
-    button4 = Button(Home, text='Unhide Image', bd=5, padx=30, pady=20, command=lambda: raise_frame(Frame4))
+    button4 = Button(Home, text='Unhide Image', bd=5, padx=30, pady=20, font = BUTTON_FONT, command=lambda: raise_frame(Frame4))
     button4.grid(row=1600, column=5000)
-    button5 = Button(Home, text='Exit', bd=5, padx=30, pady=20, command=window.quit)
+    button5 = Button(Home, text='Exit', bd=5, padx=30, pady=20, font = BUTTON_FONT, command=window.quit)
     button5.grid(row=2000, column=1500)
 
 def frame1():
@@ -69,16 +70,16 @@ def frame1():
 
     Label(Frame1, text='Input the Data to be hidden first').grid(row=800, column=1500)
     
-    button7 = Button(Frame1, bd=5, padx=10, pady=10, text='Enter', command=lambda: get_text)
+    button7 = Button(Frame1, bd=5, padx=10, pady=10, text='Enter', font = BUTTON_FONT, command=lambda: get_text)
     button7.grid(row=1600, column=1500)
     
-    button6 = Button(Frame1, bd=5, text='Select Input Image Path', command=encode)
+    button6 = Button(Frame1, bd=5, text='Select Input Image Path', font = BUTTON_FONT, command=encode)
     button6.grid(row=1800, column=1500)
 
-    button8 = Button(Frame1, bd=5, text='Go to Home', padx=30, pady=20, command=lambda: raise_frame(Home))
+    button8 = Button(Frame1, bd=5, text='Go to Home', padx=30, pady=20, font = BUTTON_FONT, command=lambda: raise_frame(Home))
     button8.grid(row=5000, column=400)
     
-    button9 = Button(Frame1, bd=5, text='Clear', padx=30, pady=20, command=lambda: clear_frame(Frame1))
+    button9 = Button(Frame1, bd=5, text='Clear', padx=30, pady=20, font = BUTTON_FONT, command=lambda: clear_frame(Frame1))
     button9.grid(row=5000, column=5000)
 
 
@@ -91,11 +92,11 @@ def frame2():
     Label(Frame2, text='Number of bits to use for Hiding').grid(row=800, column=1500)
     drop = OptionMenu(Frame2, clicked, '1', '2', '3', '4', '5', '6', '7')
     drop.grid(row=1000, column=1500)
-    button10 = Button(Frame2, bd=5, padx=10, pady=10, text='Hide', command=merge)
+    button10 = Button(Frame2, bd=5, padx=10, pady=10, text='Hide', font = BUTTON_FONT, command=merge)
     button10.grid(row=1400, column=1500)
-    button11 = Button(Frame2, bd=5, text='Go to Home', padx=30, pady=20, command=lambda: raise_frame(Home))
+    button11 = Button(Frame2, bd=5, text='Go to Home', padx=30, pady=20, font = BUTTON_FONT, command=lambda: raise_frame(Home))
     button11.grid(row=2000, column=400)
-    button12 = Button(Frame2, bd=5, text='Clear', padx=30, pady=20, command=lambda: clear_frame(Frame2))
+    button12 = Button(Frame2, bd=5, text='Clear', padx=30, pady=20, font = BUTTON_FONT, command=lambda: clear_frame(Frame2))
     button12.grid(row=2000, column=5000)
 
 
@@ -106,12 +107,12 @@ def frame3():
     make_title(Frame3, "Retrieve Text")
     Label(Frame3, text='Retrieving Text').grid(row=600, column=1500)
     Label(Frame3, text='Select Image Path').grid(row=400, column=1500)
-    button13 = Button(Frame3, bd=5, padx=10, pady=10, text='Enter', command=decode)
+    button13 = Button(Frame3, bd=5, padx=10, pady=10, text='Enter', font = BUTTON_FONT, command=decode)
     button13.grid(row=500, column=1500)
     label2 = Button(Frame3, text=message, padx=300, pady=100, state=DISABLED).grid(row=800, column=1500)
-    button14 = Button(Frame3, bd=5, text='Go to Home', padx=30, pady=20, command=lambda: raise_frame(Home))
+    button14 = Button(Frame3, bd=5, text='Go to Home', padx=30, pady=20, font = BUTTON_FONT, command=lambda: raise_frame(Home))
     button14.grid(row=1000, column=200)
-    button15 = Button(Frame3, bd=5, text='Clear', padx=30, pady=20, command=lambda: clear_frame(Frame3))
+    button15 = Button(Frame3, bd=5, text='Clear', padx=30, pady=20, font = BUTTON_FONT, command=lambda: clear_frame(Frame3))
     button15.grid(row=1000, column=5000)
 
 
@@ -127,11 +128,11 @@ def frame4():
     Label(Frame4, text='Number of bits that were use for Hiding').grid(row=800, column=1500)
     drop1 = OptionMenu(Frame4, clicked1, '1', '2', '3', '4', '5', '6', '7')
     drop1.grid(row=1000, column=1500)
-    button16 = Button(Frame4, bd=5, padx=10, pady=10, text='Unhide', command=unmerge)
+    button16 = Button(Frame4, bd=5, padx=10, pady=10, text='Unhide', font = BUTTON_FONT, command=unmerge)
     button16.grid(row=1400, column=1500)
-    button17 = Button(Frame4, bd=5, text='Go to Home', padx=30, pady=20, command=lambda: raise_frame(Home))
+    button17 = Button(Frame4, bd=5, text='Go to Home', padx=30, pady=20, font = BUTTON_FONT, command=lambda: raise_frame(Home))
     button17.grid(row=2000, column=200)
-    button18 = Button(Frame4, bd=5, text='Clear', padx=30, pady=20, command=lambda:clear_frame(Frame4))
+    button18 = Button(Frame4, bd=5, text='Clear', padx=30, pady=20, font = BUTTON_FONT, command=lambda:clear_frame(Frame4))
     button18.grid(row=2000, column=5000)
 
 
